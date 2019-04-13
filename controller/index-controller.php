@@ -14,7 +14,7 @@
         $connection = new Crud;
 
         // Ejemplo consulta CRUD
-        $regularPDOQuery = $connection->readSQL('pruebas', '1 = 1');
+        $regularPDOQuery = $connection->readSQL('pruesabas', '1 = 1');
         print_r($regularPDOQuery);
   
         echo '<br>';

@@ -8,7 +8,7 @@ class Crud extends Connection {
             $result = Connection::getConnection()->query("INSERT INTO {$table} VALUES (NULL, {$param})")->fetchAll(PDO::FETCH_ASSOC);
             return true;
         } catch (PDOException $e) {
-            throw ($e);
+            echo $e->getMessage();
         }
     }
 
@@ -18,7 +18,7 @@ class Crud extends Connection {
             $result = Connection::getConnection()->query("DELETE FROM {$table} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
-            throw ($e);
+            echo $e->getMessage();
         }
     }
 
@@ -28,7 +28,7 @@ class Crud extends Connection {
             $result = Connection::getConnection()->query("UPDATE {$table} SET {$fields} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
-            throw ($e);
+            echo $e->getMessage();
         }
     }
 
@@ -37,7 +37,7 @@ class Crud extends Connection {
             $result = Connection::getConnection()->query("SELECT * FROM {$table} WHERE ${param}")->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
-            throw ($e);
+            echo $e->getMessage();
         }
     }
 	
@@ -48,7 +48,7 @@ class Crud extends Connection {
             $stm->execute(array(':param' => $param));
             return $stm->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
-            throw ($e);
+            echo $e->getMessage();
         }
     }
 

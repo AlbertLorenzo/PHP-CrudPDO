@@ -14,12 +14,6 @@ class Crud extends Connection {
 
     #Borrar
     public function removeSQL($table, $param) {
-        if ($result) {
-            $result = Connection::getConnection()->query("DELETE FROM {$table} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
-            return true;
-        } else {
-            return false;
-        }
         try {
             return $result;
         } catch (PDOException $e) {

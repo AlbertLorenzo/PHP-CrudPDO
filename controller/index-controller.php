@@ -10,12 +10,19 @@
         // Modelo index
         // require(__DIR__ . "/../model/index-model.php");
 
-        // Ejemplo
-        echo 'hola!';
+        // Instancia clase Crud
         $connection = new Crud;
-        $result = $connection->readSQL('pruebas', '1=1');
-        var_dump($result);
-        
+
+        // Ejemplo consulta CRUD
+        $regularPDOQuery = $connection->readSQL('pruebas', '1 = 1');
+        print_r($regularPDOQuery);
+  
+        echo '<br>';
+
+        // Ejemplo consuta PREPARE
+        $antiSQLInjectionQuery = $connection->avoidSQLInjection("albert");
+        print_r($antiSQLInjectionQuery);
+
         // Después del modelo
 
         }

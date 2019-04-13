@@ -4,42 +4,58 @@ class Crud extends Connection {
     
      #Insertar
      public function insertSQL($table, $param) {
-        $result = Connection::getConnection()->query("INSERT INTO {$table} VALUES (NULL, {$param})")->fetchAll(PDO::FETCH_ASSOC);
-        if ($result) {
+        try {
+            $result = Connection::getConnection()->query("INSERT INTO {$table} VALUES (NULL, {$param})")->fetchAll(PDO::FETCH_ASSOC);
             return true;
-        } else {
-            return false;
+        } catch (PDOException $e) {
+            throw ($e);
         }
     }
 
     #Borrar
     public function removeSQL($table, $param) {
-    $result = Connection::getConnection()->query("DELETE FROM {$table} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
         if ($result) {
+            $result = Connection::getConnection()->query("DELETE FROM {$table} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
             return true;
         } else {
             return false;
+        }
+        try {
+            return $result;
+        } catch (PDOException $e) {
+            throw ($e);
         }
     }
 
     #Actualizar
     public function updateSQL($table, $fields, $param) {
-    $result = Connection::getConnection()->query("UPDATE {$table} SET {$fields} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
-        if ($result) {
-            return true;
-        } else {
-            return false;
+        try {
+            $result = Connection::getConnection()->query("UPDATE {$table} SET {$fields} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            throw ($e);
+        }
+    }
+
+    public function readSQL($table, $param) {
+        try {
+            $result = Connection::getConnection()->query("SELECT * FROM {$table} WHERE ${param}")->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            throw ($e);
         }
     }
 	
-    #Leer, devuelve array asociativo
-    public function readSQL($table, $param) {
-    $result = $this->getConnection()->query("SELECT * FROM {$table} WHERE {$param}")->fetchAll(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result;
-        } else {
-            return false;
+    #Ejemplo para evitar SQL Injections con prepare
+    public function avoidSQLInjection($param) {
+        $stm = $this->getConnection()->prepare("SELECT * FROM pruebas WHERE nombre=:param");
+        try {
+            $stm->execute(array(':param' => $param));
+            return $stm->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            throw ($e);
         }
     }
+
 }
 ?>

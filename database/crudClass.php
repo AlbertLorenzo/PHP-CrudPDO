@@ -32,6 +32,7 @@ class Crud extends Connection {
         }
     }
 
+    #Leer
     public function readSQL($table, $param) {
         try {
             $result = Connection::getConnection()->query("SELECT * FROM {$table} WHERE ${param}")->fetchAll(PDO::FETCH_ASSOC);
